@@ -19,7 +19,9 @@ Expected Data Sources(s):
 Kaggle Diabetes Prediction Dataset
 LinkLinks to an external site.
 Includes demographic and biomedical measurements data.
--[https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset]
+
+- [https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset]()
+
 This dataset contains 3 files:
 diabetes _ 012 _ health _ indicators _ BRFSS2015.csv is a clean dataset of 253,680 survey responses to the CDC's BRFSS2015
 diabetes _ binary _ 5050split _ health _ indicators _ BRFSS2015.csv is a clean dataset of 70,692 survey responses to the CDC's BRFSS2015
@@ -47,5 +49,6 @@ What suggestions do you have for next steps?
 
 
 ##### Contact and Further Information
-Mina Sardari
+linkedin :[www.linkedin.com/in/mina-s-3b728651]()
+
 
