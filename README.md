@@ -1,6 +1,6 @@
 ### Project Title
 
-**Author**
+**Author** : Mina Sardari
 
 #### Executive summary
 
