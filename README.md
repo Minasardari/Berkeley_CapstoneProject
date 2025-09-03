@@ -49,6 +49,6 @@ What suggestions do you have for next steps?
 
 
 ##### Contact and Further Information
-linkedin :[www.linkedin.com/in/mina-s-3b728651]()
+linkedin :[Mina Sardari](www.linkedin.com/in/mina-s-3b728651)
 
 
