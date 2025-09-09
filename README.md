@@ -112,8 +112,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 ## 5. Correlation Analysis
 <img width="1989" height="790" alt="image" src="https://github.com/user-attachments/assets/480e6f25-9ba7-46aa-869c-f5117fa5a104" />
 <img width="1111" height="790" alt="image" src="https://github.com/user-attachments/assets/b3778722-74ac-4869-af38-e330c5363f45" />
-<img width="1189" height="829" alt="image" src="https://github.com/user-attachments/assets/27f68c43-6568-44f7-a2b3-f5acb97b15c7" />
-<img width="150" height="350" alt="image" src="https://github.com/user-attachments/assets/1114e177-c5a0-404f-adac-f46ddf66db73" />
+
 - **Top positive correlations with Diabetes:**
   - HighBP (0.26), BMI (0.21), DiffWalk (0.21), HighChol (0.20), HeartDisease/Attack (0.17), PhysHlth (0.16).
 - **Protective correlations:**
