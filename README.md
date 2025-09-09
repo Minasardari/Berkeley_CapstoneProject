@@ -113,7 +113,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 <img width="1989" height="790" alt="image" src="https://github.com/user-attachments/assets/480e6f25-9ba7-46aa-869c-f5117fa5a104" />
 <img width="1111" height="790" alt="image" src="https://github.com/user-attachments/assets/b3778722-74ac-4869-af38-e330c5363f45" />
 <img width="1189" height="829" alt="image" src="https://github.com/user-attachments/assets/27f68c43-6568-44f7-a2b3-f5acb97b15c7" />
-
+<img width="150" height="350" alt="image" src="https://github.com/user-attachments/assets/1114e177-c5a0-404f-adac-f46ddf66db73" />
 - **Top positive correlations with Diabetes:**
   - HighBP (0.26), BMI (0.21), DiffWalk (0.21), HighChol (0.20), HeartDisease/Attack (0.17), PhysHlth (0.16).
 - **Protective correlations:**
@@ -126,6 +126,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 ---
 
 ## 6. Interaction Effects
+
 - **BMI × PhysHlth**: Strongest signal; diabetics cluster at high BMI + high PhysHlth.
 - **HighBP × HighChol**: Prevalence rises to ~34% when both present (synergistic effect).
 - **HighBP × Age**: Older adults with hypertension show much higher prevalence than younger hypertensives.
@@ -135,7 +136,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 ✅ Key Insight: Diabetes risk is multifactorial and **driven by combined effects**. Interaction terms should be included in logistic regression, or use tree-based models which capture them automatically.
 
 ---
-<img width="1589" height="4190" alt="image" src="https://github.com/user-attachments/assets/1114e177-c5a0-404f-adac-f46ddf66db73" />
+
 
 ## 7. Sex-Specific Patterns
 - **BMI & PhysHlth**: Differences between diabetics and non-diabetics more pronounced in women.
