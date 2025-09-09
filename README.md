@@ -75,7 +75,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 
 
 ## 2. Binary Features
-<img width="1478" height="2555" alt="image" src="https://github.com/user-attachments/assets/d26c7cba-0b3f-4a21-94d8-43aa01519ac1" />
+<img width="700" height="1300" alt="image" src="https://github.com/user-attachments/assets/d26c7cba-0b3f-4a21-94d8-43aa01519ac1" />
 - **HighBP (45%) & HighChol (44%)**: Almost half the sample at cardiovascular risk; both show strong association with diabetes (~25–27% prevalence when present).
 - **HeartDisease/Attack (10%) & Stroke (4.5%)**: Smaller groups but very high diabetes prevalence (~30–39%).
 - **PhysActivity (73%)**: Protective factor — inactive individuals show ~25% prevalence vs 16% for active.
