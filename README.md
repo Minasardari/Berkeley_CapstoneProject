@@ -56,9 +56,11 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 ## 🔍 EDA Key Findings
 - **Imbalance:** 82.7% non-diabetic vs 17.3% diabetic.  
 # 📊 Key Findings from EDA
-<img width="1489" height="311" alt="image" src="https://github.com/user-attachments/assets/f5597726-9c5d-48b5-aacd-1cd79c83a15c" />
+
 
 ## 1. Numeric Features
+<img width="1489" height="311" alt="image" src="https://github.com/user-attachments/assets/f5597726-9c5d-48b5-aacd-1cd79c83a15c" />
+<img width="1489" height="311" alt="image" src="https://github.com/user-attachments/assets/7514ceb7-b8e2-43f3-8b33-b88a5e523c9a" />
 - **BMI**
   - Centered in the overweight range (27–28).
   - Many respondents obese (BMI > 30); extreme cases (BMI > 40) likely true severe obesity rather than noise.
@@ -70,9 +72,10 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
   - ✅ Key Insight: PhysHlth correlates more strongly with diabetes than MentHlth. Outliers kept since they represent real health burdens.
 
 ---
-<img width="1478" height="2555" alt="image" src="https://github.com/user-attachments/assets/d26c7cba-0b3f-4a21-94d8-43aa01519ac1" />
+
 
 ## 2. Binary Features
+<img width="1478" height="2555" alt="image" src="https://github.com/user-attachments/assets/d26c7cba-0b3f-4a21-94d8-43aa01519ac1" />
 - **HighBP (45%) & HighChol (44%)**: Almost half the sample at cardiovascular risk; both show strong association with diabetes (~25–27% prevalence when present).
 - **HeartDisease/Attack (10%) & Stroke (4.5%)**: Smaller groups but very high diabetes prevalence (~30–39%).
 - **PhysActivity (73%)**: Protective factor — inactive individuals show ~25% prevalence vs 16% for active.
@@ -88,6 +91,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 
 ## 3. Categorical Features (Unfiltered Population View)
 <img width="1980" height="1189" alt="image" src="https://github.com/user-attachments/assets/6cfa0994-8ca9-4f48-9468-22d44eaf49e3" />
+<img width="1980" height="1189" alt="image" src="https://github.com/user-attachments/assets/4b4057e5-b9f1-47af-8f22-84b57e2ac54a" />
 
 - **GenHlth**: Majority rate health as Poor/Fair. Strongest categorical predictor — diabetes prevalence drops from 41% (Poor) → 4% (Excellent).
 - **Age**: Skews older (65+ heavily represented). Diabetes prevalence increases sharply with age, especially 55+.
@@ -108,6 +112,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 ## 5. Correlation Analysis
 <img width="1989" height="790" alt="image" src="https://github.com/user-attachments/assets/480e6f25-9ba7-46aa-869c-f5117fa5a104" />
 <img width="1111" height="790" alt="image" src="https://github.com/user-attachments/assets/b3778722-74ac-4869-af38-e330c5363f45" />
+<img width="1189" height="829" alt="image" src="https://github.com/user-attachments/assets/27f68c43-6568-44f7-a2b3-f5acb97b15c7" />
 
 - **Top positive correlations with Diabetes:**
   - HighBP (0.26), BMI (0.21), DiffWalk (0.21), HighChol (0.20), HeartDisease/Attack (0.17), PhysHlth (0.16).
