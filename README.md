@@ -168,34 +168,55 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 
 
 ## 🤖 Modeling
-- **Baseline:** Dummy Classifier
-  - Result: Predicted only Non-Diabetic cases (Recall = 0).  
-  - Accuracy (82.9%) misleading due to imbalance.
- 
-- -
+- **Baseline:** Dummy Classifier and Linesr Regression
+results:
+**Dummy Classifier:**
+``accuracy train: 0.8292672193281148``
+
+``accuracy test: 0.829273659427465``
+
+``roc_auc: 0.5``
+
+``f1_positive: 0.0``
+
+``pr_auc: 0.17072634057253505``
+``recall_positive: 0``
+
+
+**Linear baseline (LogisticRegression):**
+
+``accuracy train: 0.7000``
+
+``accuracy test: 0.6994``
+
+``roc_auc: 0.7856``
+
+``f1_positive: 0.4540``
+
+``pr_auc: 0.4178``
+
+``recall_positive: 0.7321``
+- The dummy classifier, which always predicts the majority group, gave us a deceptively high accuracy (~83%) but provided no real value for decision-making since it failed to identify any high-risk patients (ROC-AUC = 0.5, F1 = 0). In contrast, when we established Logistic Regression as our linear baseline, the model demonstrated meaningful predictive power: while overall accuracy dropped to ~70%, it successfully distinguished between patients at higher and lower risk (ROC-AUC ≈ 0.79, PR-AUC ≈ 0.42). This shows that, unlike the dummy model, Logistic Regression offers actionable insights and can serve as a solid starting point for building more advanced predictive models.
+
+ ###📊 Linear Baseline (Logistic Regression) – Key Results
+
+- **Strong sensitivity**: `recall_positive = 0.7321` → the model correctly identifies ~73% of actual diabetic cases.  
+- **Meaningful ranking power**: `roc_auc ≈ 0.786` and `pr_auc ≈ 0.418` show the model can effectively separate high-risk from low-risk patients.  
+- **Trade-off visible**: `f1_positive ≈ 0.454` with overall accuracy around 70% — expected when prioritizing recall of positive cases over general accuracy.
+- 
 ## 📏 Evaluation Metric
 
 ### Selected Metric: **Recall (Sensitivity)**
 
-#### ✅ Clear Identification
-- Recall (also known as Sensitivity or True Positive Rate) measures the proportion of actual diabetics that the model correctly identifies.  
-
-Formula:  
-\[
-\text{Recall} = \frac{TP}{TP + FN}
-\]  
-
----
-
 #### ✅ Valid Interpretation
-- A **high recall** means the model successfully identifies most diabetic individuals.  
-- A **low recall** means the model misses many diabetics (high false negatives), which we observed in the baseline logistic regression.  
+- A **high recall** means the model successfully identifies most diabetic individuals and 73 percent is considered high.  
+- A **low recall** means the model misses many diabetics (high false negatives), which we observed in the baseline logistic regression 0.  
 
 ---
 
 #### ✅ Rationale
 - The dataset is **imbalanced** (≈83% Non-Diabetic, 17% Diabetic).  
-- Accuracy is misleading: a model predicting “everyone = non-diabetic” achieves ~83% accuracy but 0% recall for diabetics.  
+- Accuracy is misleading: a model predicting “everyone = non-diabetic” achieves ~83% accuracy but 0% recall for diabetics for Dummy classifier but Linear Regression 73%.  
 - From a **business and healthcare perspective**, missing diabetics (false negatives) is far more costly than false positives:
   - Missed cases = delayed treatment, higher future claims cost, worse patient outcomes.
   - False positives = additional screening cost, but far less severe impact.  
@@ -214,7 +235,7 @@ Formula:
 - **Next Steps:**
   - Address imbalance with **SMOTE resampling** or **class weights**.  
   - Evaluate models with **ROC-AUC, PR-AUC, Recall, and F1** (not accuracy).  
-  - Test tree-based models (Random Forest, XGBoost) for capturing nonlinearities and interactions.  
+  - Test more models (KNN, or SVC or Decision Tree,  possible random forest) for capturing nonlinearities and interactions.  
 
 ---
 
