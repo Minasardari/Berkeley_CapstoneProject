@@ -1,9 +1,9 @@
-### 🩸 Project : Diabetes Risk Prediction
-#### Outline of project
+# 🩸 Project : Diabetes Risk Prediction
+## Outline of project
 
 Link to my notebook: https://github.com/Minasardari/Berkeley_CapstoneProject/blob/main/MinaSardari_Capstone_DiabetePrediction.ipynb
 
-## 🎯 Objective
+### 🎯 Objective
 The goal of this project is to **analyze health survey data** to identify key risk factors associated with diabetes and build a predictive model to classify individuals as **Diabetic** or **Non-Diabetic**.  
 This project follows a **CRISP-DM framework**: data cleaning, exploratory data analysis (EDA), feature engineering, modeling, and evaluation.
 
