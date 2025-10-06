@@ -59,7 +59,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 # 📊 Key Findings from EDA
 
 
-## 1. Numeric Features
+### 1. Numeric Features
 <img width="1489" height="311" alt="image" src="https://github.com/user-attachments/assets/f5597726-9c5d-48b5-aacd-1cd79c83a15c" />
 <img width="1489" height="311" alt="image" src="https://github.com/user-attachments/assets/7514ceb7-b8e2-43f3-8b33-b88a5e523c9a" />
 - **BMI**
@@ -75,7 +75,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 ---
 
 
-## 2. Binary Features
+### 2. Binary Features
 <img width="700" height="1300" alt="image" src="https://github.com/user-attachments/assets/d26c7cba-0b3f-4a21-94d8-43aa01519ac1" />
 - **HighBP (45%) & HighChol (44%)**: Almost half the sample at cardiovascular risk; both show strong association with diabetes (~25–27% prevalence when present).
 - **HeartDisease/Attack (10%) & Stroke (4.5%)**: Smaller groups but very high diabetes prevalence (~30–39%).
@@ -90,7 +90,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 
 ---
 
-## 3. Categorical Features (Unfiltered Population View)
+### 3. Categorical Features (Unfiltered Population View)
 <img width="1980" height="1189" alt="image" src="https://github.com/user-attachments/assets/6cfa0994-8ca9-4f48-9468-22d44eaf49e3" />
 <img width="1980" height="1189" alt="image" src="https://github.com/user-attachments/assets/4b4057e5-b9f1-47af-8f22-84b57e2ac54a" />
 
@@ -103,14 +103,14 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 
 ---
 
-## 4. Target Variable
+### 4. Target Variable
 - **Non-Diabetic:** 82.7%
 - **Diabetic:** 17.3%
 - ✅ Key Insight: Dataset is imbalanced. Accuracy is misleading; evaluation must emphasize **Recall, F1, ROC-AUC, PR-AUC**.
 
 ---
 
-## 5. Correlation Analysis
+### 5. Correlation Analysis
 <img width="1959" height="844" alt="image" src="https://github.com/user-attachments/assets/1b54e32d-b72f-4339-9210-423caef7011b" />
 <img width="1498" height="2555" alt="image" src="https://github.com/user-attachments/assets/e7f3ee7f-6ed9-42e1-b40d-bfc157edcd26" />
 
@@ -199,7 +199,7 @@ It’s redundant, not irrelevant.)
 - **Overall pattern:** Socioeconomic and lifestyle factors — especially **low income**, **limited education**, and **older age** — are strongly tied to higher diabetes prevalence.  
 ---
 
-## 6. Interaction Effects
+### 6. Interaction Effects
 
 - **BMI × PhysHlth**: Strongest signal; diabetics cluster at high BMI + high PhysHlth.
 - **HighBP × HighChol**: Prevalence rises to ~34% when both present (synergistic effect).
@@ -237,12 +237,12 @@ This highlights how education and income together drive health disparities, like
 ---
 
 
-## 7. Sex-Specific Patterns
+### 7. Sex-Specific Patterns
 - **BMI & PhysHlth**: Differences between diabetics and non-diabetics more pronounced in women.
 - **MentHlth**: Diabetic women report more poor mental health days; effect weak in men.
 - ✅ Key Insight: Diabetes has a heavier health burden in women → consider `Sex × BMI` and `Sex × PhysHlth` interactions.
 
-## 8. Explore more on data
+### 8. Explore more on data
  - also tried BMI Group for displaying better visual for affect on diabets but decided to remove this and keep number BMI to have less complex Model
 <img width="989" height="390" alt="image" src="https://github.com/user-attachments/assets/ba5b4547-ebba-4a55-be10-819fe1710a64" />
 - Scree Plot for numeric Plot
@@ -251,7 +251,7 @@ This highlights how education and income together drive health disparities, like
   -> safe to retain the first 2 components for visualization or modeling.
 ---
 
-##9. 🎯 Overall Takeaways About Features
+## 🎯 Overall Takeaways 
 - **Core predictors**: HighBP, HighChol, BMI,  GenHlth, DiffWalk, PhysHlth, Age, Income, Education.
 - **Protective factors**: Physical activity, healthier diet (weak effect).
 - **Critical interactions**: BMI × PhysHlth, HighBP × HighChol, Age × HighBP, Education × Income.
@@ -260,7 +260,7 @@ This highlights how education and income together drive health disparities, like
   - Use **Recall, F1, ROC-AUC/PR-AUC** instead of Accuracy
       - A model could predict *everyone as non-diabetic* and still achieve **>80% accuracy**, even though it **completely fails to detect actual diabetics**. as data is imbalance
       - High accuracy in this case is misleading — it looks good, but it’s *clinically useless*.).
-      - ## ✅ Better Metrics for Medical Screening
+      - ✅ Better Metrics for Medical Screening
 
                   | **Metric** | **What It Measures** | **Why It Matters for Diabetes** |
                   |-------------|----------------------|----------------------------------|
@@ -269,7 +269,7 @@ This highlights how education and income together drive health disparities, like
                   | **F1 Score** | Harmonic mean of precision & recall | Balances false negatives and false positives — ideal for **imbalanced data**. |
                   | **ROC-AUC** | Ability to rank diabetics higher than non-diabetics | Measures **overall discriminative power** — higher = better class separation. |
                   | **PR-AUC (Precision–Recall AUC)** | Focuses on performance for the diabetic class | More informative than ROC-AUC on **imbalanced datasets**. |
-        -### 🩺 In a Diabetes Screening Context
+        -🩺 In a Diabetes Screening Context
 
                   | **Model Behavior** | **Real-World Meaning** |
                   |---------------------|------------------------|
