@@ -273,17 +273,11 @@ Positive correlations (🔵) indicate a higher likelihood of diabetes, while neg
 3. **Drop (Low Variance):** `CholCheck`, `AnyHealthcare`, `NoDocbcCost`, `HvyAlcoholConsump`
 4. **Optionally test:** `DiffWalk`, `HeartDisease/Attack` (may interact with numeric features like BMI or Age)
 
-
-<img width="2133" height="533" alt="image" src="https://github.com/user-attachments/assets/646dcc87-5c8c-4fd0-b648-c9a07f04d898" />
-
-
 <img width="1189" height="829" alt="image" src="https://github.com/user-attachments/assets/368894da-ff6c-4251-a3bc-e4d0b0bf8ffc" />
 
 The boxplots reveal that worse general health corresponds with higher BMI and poorer physical condition,
 especially among diabetic individuals.
 Mental-health effects exist but are less pronounced, suggesting physical and lifestyle factors are stronger diabetes predictors.
-
-
 
 ---
 
@@ -301,30 +295,49 @@ Individuals with limited education and low income exhibit up to 5×
 higher diabetes prevalence than their wealthier, better-educated counterparts.
 This highlights how education and income together drive health disparities, likely via differences in nutrition, preventive care, and stress exposure.
 <img width="1100" height="590" alt="image" src="https://github.com/user-attachments/assets/c6f17c27-4614-4e74-a49b-0f5295acfe7a" />
-
-
 ✅ Key Insight: Diabetes risk is multifactorial and **driven by combined effects**. Interaction terms should be included in logistic regression, or use tree-based models which capture them automatically.
 
 
 ---
 ### 5. Explore more on data
- Sex-Specific Patterns
+ **Sex-Specific Patterns**
 - **BMI & PhysHlth**: Differences between diabetics and non-diabetics more pronounced in women.
 - **MentHlth**: Diabetic women report more poor mental health days; effect weak in men.
 - ✅ Key Insight: Diabetes has a heavier health burden in women → consider `Sex × BMI` and `Sex × PhysHlth` interactions.
 
  - also tried BMI Group for displaying better visual for affect on diabets but decided to remove this and keep number BMI to have less complex Model
 <img width="989" height="390" alt="image" src="https://github.com/user-attachments/assets/ba5b4547-ebba-4a55-be10-819fe1710a64" />
-- Scree Plot for numeric Plot
+
+<img width="819" height="770" alt="image" src="https://github.com/user-attachments/assets/7839b6cf-c1e8-4b0d-8eed-452bdf5f1e33" />
+This visual basically prove with more poor days as mental or physical health and higher BMI the Diabete is more likely. 
+
+**Scree Plot for numeric Plot**
+<img width="691" height="470" alt="image" src="https://github.com/user-attachments/assets/49047c54-8725-4f7c-bce3-b4b722f33794" />
+features = ["BMI", "PhysHlth", "MentHlth"] 
   - PC1 + PC2 explain ~78% of variance → Most structure is captured here.
   - PC3 adds only ~22% → marginal gain,
   -> safe to retain the first 2 components for visualization or modeling.
 ---
 
-###6. 🎯 Overall Takeaways EDA
+### 6. Overall Takeaways for EDA
+### 🎯 Modeling Takeaways
 - **Core predictors**: HighBP, HighChol, BMI,  GenHlth, DiffWalk, PhysHlth, Age, Income, Education.
 - **Protective factors**: Physical activity, healthier diet (weak effect).
 - **Critical interactions**: BMI × PhysHlth, HighBP × HighChol, Age × HighBP, Education × Income.
+    
+### 🎯 Business Takeaways
+1. **Prevention Levers**: Target obesity, hypertension, and cholesterol control — the most cost-effective interventions.  
+2. **High-Risk Segments**: Older adults, low-income groups, and those with mobility issues or poor self-rated health.  
+3. **Access Barriers**: Address affordability gaps (9% skip care due to cost) to reduce long-term disease burden.  
+4. **Modeling Focus**: Use advanced ML models that balance precision and recall, ensuring at-risk members are identified early for **preventive outreach and resource allocation**.  
+
+---
+## 🛠️ Feature Engineering
+
+
+
+## 🤖 Modeling
+
 - **Modeling Implications**:
   - Handle imbalance ( class weights).
   - Use **Recall, F1, ROC-AUC/PR-AUC** instead of Accuracy
@@ -355,18 +368,7 @@ This highlights how education and income together drive health disparities, like
       Extremely high BMI values (above 60) are considered **outliers or data-entry errors**, as they can distort statistical summaries and bias model training.  
       By filtering these unrealistic values, we maintain a more **robust and reliable distribution** that reflects real-world population health patterns.
 ---
-## 🎯 Business Takeaways
-1. **Prevention Levers**: Target obesity, hypertension, and cholesterol control — the most cost-effective interventions.  
-2. **High-Risk Segments**: Older adults, low-income groups, and those with mobility issues or poor self-rated health.  
-3. **Access Barriers**: Address affordability gaps (9% skip care due to cost) to reduce long-term disease burden.  
-4. **Modeling Focus**: Use advanced ML models that balance precision and recall, ensuring at-risk members are identified early for **preventive outreach and resource allocation**.  
 
----
-## 🛠️ Feature Engineering
-
-
-
-## 🤖 Modeling
 - **Baseline:** Dummy Classifier and Linesr Regression
 results:
 **Dummy Classifier:**
