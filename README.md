@@ -60,6 +60,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 
 
 ## 1. Numeric Features
+<img width="1959" height="844" alt="image" src="https://github.com/user-attachments/assets/a1b3b696-b99d-46da-b705-f7f82b4b0dfd" />
 <img width="1489" height="311" alt="image" src="https://github.com/user-attachments/assets/f5597726-9c5d-48b5-aacd-1cd79c83a15c" />
 <img width="1489" height="311" alt="image" src="https://github.com/user-attachments/assets/7514ceb7-b8e2-43f3-8b33-b88a5e523c9a" />
 - **BMI**
