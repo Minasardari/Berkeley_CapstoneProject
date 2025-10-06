@@ -12,7 +12,8 @@ This project follows a **CRISP-DM framework**: data cleaning, exploratory data a
 Early detection of diabetes is crucial to preventing serious complications such as kidney failure, heart disease, and stroke.  This project aims to leverage machine learning to predict diabetes risk based on demographic, medical, and symptom data. By identifying high-risk individuals earlier, we can enable timely lifestyle changes or medical intervention, ultimately improving patient outcomes and reducing healthcare costs. Moreover, the use of data-driven models promotes equitable, scalable, and personalized care as this work highly relevant to today’s public health challenges.
 
 #### Research Question
-Can we accurately predict early-stage diabetes risk using patient demographic and life style choices and  medical, and symptom data?
+- Can we accurately predict early-stage diabetes risk using patient demographic and life style choices and  medical, and symptom data?
+- What risk factors are most helpfull to predict the diabetes risk, corolation?
 
 ---
 ## 📂 Dataset
@@ -110,6 +111,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 ---
 
 ## 5. Correlation Analysis
+<img width="1959" height="844" alt="image" src="https://github.com/user-attachments/assets/1b54e32d-b72f-4339-9210-423caef7011b" />
 <img width="1989" height="790" alt="image" src="https://github.com/user-attachments/assets/480e6f25-9ba7-46aa-869c-f5117fa5a104" />
 <img width="1111" height="790" alt="image" src="https://github.com/user-attachments/assets/b3778722-74ac-4869-af38-e330c5363f45" />
 
