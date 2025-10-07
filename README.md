@@ -48,6 +48,39 @@ diabetes _ 012 _ health _ indicators _ BRFSS2015.csv is a clean dataset of 253,6
 diabetes _ binary _ 5050split _ health _ indicators _ BRFSS2015.csv is a clean dataset of 70,692 survey responses to the CDC's BRFSS2015
 diabetes _ binary _ health _ indicators _ BRFSS2015.csv is a clean dataset of 253,680 survey responses to the CDC's BRFSS2015
 
+**Features (Inputs – 21 variables)**
+1.   HighBP – High blood pressure
+2.   HighChol – High cholesterol
+3.   CholCheck – Cholesterol check in 5 years
+4.   BMI – Body Mass Index
+5.   Smoker – Ever smoked 100 cigarettes
+6.   Stroke – Ever had a stroke
+7.   HeartDiseaseorAttack – Coronary heart disease or myocardial infarction
+8.   PhysActivity – Physical activity in past 30 days
+
+9.   PhysActivity – Physical activity in past 30 days
+
+10.   Fruits – Consume fruits 1+ times per day
+11.   Veggies – Consume vegetables 1+ times per day
+
+12.   HvyAlcoholConsump – Heavy alcohol consumption
+13.   AnyHealthcare – Have any kind of health care coverage
+14.   NoDocbcCost – Couldn’t see a doctor because of cost
+15.   GenHlth – Self-rated general health (1=excellent → 5=poor)
+16.   MentHlth – Days of poor mental health (past 30)
+17.   PhysHlth – Days of poor physical health (past 30)
+18.   DiffWalk – Serious difficulty walking or climbing stairs
+19.   Sex – Biological sex (0=Female, 1=Male)
+20.   Age – Age category (13 levels)
+21.   Education – Education level (1–6 scale)
+22.   Income – Household income level (1–8 scale)
+
+
+**Output (Target – differs by dataset)**
+Diabetes_binary (2 classes, imbalanced, full population)
+
+0 = no diabetes
+1 = prediabetes or diabetes
 #### Methodology
 Preprocessing & EDA
 CRISP-DM, Data Preparation (cleaning missing values, encoding categorical features, scaling numerical attributes),
@@ -330,11 +363,37 @@ features = ["BMI", "PhysHlth", "MentHlth"]
 2. **High-Risk Segments**: Older adults, low-income groups, and those with mobility issues or poor self-rated health.  
 3. **Access Barriers**: Address affordability gaps (9% skip care due to cost) to reduce long-term disease burden.  
 4. **Modeling Focus**: Use advanced ML models that balance precision and recall, ensuring at-risk members are identified early for **preventive outreach and resource allocation**.  
+---
+## 🛠️ ✂️ Train/Test split
+To prepare the dataset for model training and evaluation, a stratified train-test split was applied. The data was divided into 80% for training and 20% for testing, using a fixed random state (42) to ensure reproducibility. The stratification parameter was included to maintain the same proportion of diabetic and non-diabetic cases in both subsets.
+This approach helps prevent class imbalance issues during model evaluation and ensures that performance metrics accurately reflect the model’s ability to generalize across both classes.
 
 ---
 ## 🛠️ Feature Engineering
+<img width="1687" height="394" alt="image" src="https://github.com/user-attachments/assets/95c77cd0-009e-4205-af0d-aaaa364bcab3" />
+
+**ColumnTransformer** pipeline was implemented to preprocess the dataset before modeling.  
+Each feature type was handled using an appropriate transformation to improve consistency, interpretability, and model performance.
 
 
+### 🔹 Numerical Features
+Features such as `BMI`, `MentHlth`, `PhysHlth`, `HighBP`, `HighChol`, `HeartDiseaseorAttack`, `PhysActivity`, and `DiffWalk` were standardized using **`StandardScaler`** to ensure all numeric inputs share a similar range and distribution.
+
+### 🔹 Ordinal Categorical Features
+
+Encoded using **`OrdinalEncoder`** to preserve the natural order of categories:
+
+| Feature | Encoding Order |
+|----------|----------------|
+| `GenHlth` | Excellent → Very Good → Good → Fair → Poor |
+| `Education` | Higher → High School → Basic |
+| `Income` | Ordered by increasing income ranges |
+
+### 🔹 Nominal Categorical Features
+
+Non-ordered variables (such as `Sex`,'Age', etc.) were encoded using **`OneHotEncoder(drop='first')`** to prevent multicollinearity while retaining interpretability.
+
+---
 
 ## 🤖 Modeling
 
