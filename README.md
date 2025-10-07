@@ -769,18 +769,18 @@ By applying these findings, healthcare organizations can:
 - Optimize resource allocation,
 - and promote **data-driven public health strategies** to reduce diabetes prevalence over time.
 
-  Clinical takeaway:
+### 🩺Clinical takeaway:
 
-  What this tool does :
-  - Uses routine survey‐style information (age, BMI, blood pressure, cholesterol, activity level, general health, etc.) to estimate a patient’s risk of diabetes.
-  = Returns a risk score (0–1) and a flag (Diabetic vs Non-Diabetic) based on a tuned threshold chosen for screening.
+What this tool does :
+- Uses routine survey‐style information (age, BMI, blood pressure, cholesterol, activity level, general health, etc.) to estimate a patient’s risk of diabetes.
+- Returns a risk score (0–1) and a flag (Diabetic vs Non-Diabetic) based on a tuned threshold chosen for screening.
 
-  The tool is tuned to miss fewer true diabetics (higher recall) even if that creates some false alarms. That’s appropriate for screening. It should augment, not replace, clinical judgment and confirmatory testing (A1C, FPG, OGTT).
-  Follow-up steps:
-       Order confirmatory labs (A1C / fasting glucose).
-       Offer brief lifestyle counseling (diet, activity, weight management).
-       Address BP/lipid control and mobility barriers where relevant.
-       Prioritize care navigation for lower-income or low-education patients.
+- The tool is tuned to miss fewer true diabetics (higher recall) even if that creates some false alarms. That’s appropriate for screening. It should augment, not replace, clinical judgment and confirmatory testing (A1C, FPG, OGTT).
+Follow-up steps:
+   Order confirmatory labs (A1C / fasting glucose).
+   Offer brief lifestyle counseling (diet, activity, weight management).
+   Address BP/lipid control and mobility barriers where relevant.
+   Prioritize care navigation for lower-income or low-education patients.
 
 
 ##### Contact and Further Information
