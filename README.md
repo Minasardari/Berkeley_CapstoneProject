@@ -723,8 +723,6 @@ This will enhance **transparency** and **trust** in the diabetes risk prediction
 
 
 ### Results
-What did your research find?
-
 #### 🧾 Main Takeaways, Business Recommendations & Future Work
 
 ### 🧩 **Key Findings**
@@ -753,10 +751,8 @@ What did your research find?
 - Develop a predictive model that balances sensitivity (recall for diabetics) with precision.  
 - Support public health strategies by identifying high-risk groups (e.g., obese, hypertensive, low income/education).
 - 
----
-## Next steps
-What suggestions do you have for next steps?
 
+## Next steps
 
 | Focus Area | Description |
 |-------------|--------------|
