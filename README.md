@@ -27,6 +27,9 @@ Early detection of diabetes is crucial to preventing serious complications such 
   **Output Type:** Binary (0 or 1)  
   - **0 → Non-Diabetic**  
   - **1 → Diabetic**
+ 
+- #### **Methodology used**
+ reprocessing & EDA CRISP-DM, Data Preparation (cleaning missing values, encoding categorical features, scaling numerical attributes), Correlation analysis and visualization Feature engineering Model comparison and selecting a model (Logistic Regression, Decision Tree, KNN, SVC/SVM) Also anticipate to use some other concept related to upcoming modules Random Forest and AdaBoost or Neural Networks Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 ---
 ## 📂 Dataset
 - Source: Public health survey (binary target = Diabetic).  
@@ -77,18 +80,13 @@ diabetes _ binary _ health _ indicators _ BRFSS2015.csv is a clean dataset of 25
 
 
 **Output (Target – differs by dataset)**
-Diabetes_binary (2 classes, imbalanced, full population)
+Diabetes_binary (3 classes, imbalanced, full population)
 
 0 = no diabetes
-1 = prediabetes or diabetes
-#### Methodology
-Preprocessing & EDA
-CRISP-DM, Data Preparation (cleaning missing values, encoding categorical features, scaling numerical attributes),
-Correlation analysis and visualization
-Feature engineering 
-Model comparison and selecting a model (Logistic Regression, Decision Tree, KNN, SVC/SVM)
-Also anticipate to use some other concept related to upcoming modules Random Forest and AdaBoost or Neural Networks
-Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
+1 = diabetes
+2 = prediabetes 
+
+---
 
  ## 🧹 Data Preparation
 - Removed duplicates and handled missing values.  
@@ -110,11 +108,10 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 ---
 ## 🔍 EDA Key Findings
 - **Imbalance:** 82.7% non-diabetic vs 17.3% diabetic.  
-# 📊 Key Findings from EDA
 
-## 1. EDA – Univariate Analysis
+### 1. EDA – Univariate Analysis
 
-### A. Numeric Features
+#### A. Numeric Features
 <img width="1489" height="311" alt="image" src="https://github.com/user-attachments/assets/f5597726-9c5d-48b5-aacd-1cd79c83a15c" />
 <img width="1489" height="311" alt="image" src="https://github.com/user-attachments/assets/7514ceb7-b8e2-43f3-8b33-b88a5e523c9a" />
 
@@ -128,9 +125,9 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
   - Meaningful subgroup reports 10–30 days → chronic illness group.
   - ✅ Key Insight: PhysHlth correlates more strongly with diabetes than MentHlth. Outliers kept since they represent real health burdens.
 
----
 
-### B. Binary Features
+
+#### B. Binary Features
 <img width="1107" height="662" alt="image" src="https://github.com/user-attachments/assets/9b4e410b-2664-40cf-9d24-1831887a8abf" />
 <img width="1111" height="676" alt="image" src="https://github.com/user-attachments/assets/1756216d-a91e-46aa-8a37-357778a3470f" />
 <img width="1106" height="361" alt="image" src="https://github.com/user-attachments/assets/87192cdf-f582-4715-afd3-25d67904350f" />
@@ -148,9 +145,9 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 
 ✅ Combined Insight: Cardiovascular factors (HighBP, HighChol, HeartDisease, Stroke) and mobility limitations (DiffWalk) are the most powerful binary predictors. PhysActivity is the clearest protective factor.
 
----
 
-### C. Categorical Features (Unfiltered Population View)
+
+#### C. Categorical Features (Unfiltered Population View)
 <img width="1980" height="1189" alt="image" src="https://github.com/user-attachments/assets/6cfa0994-8ca9-4f48-9468-22d44eaf49e3" />
 <img width="1980" height="1189" alt="image" src="https://github.com/user-attachments/assets/4b4057e5-b9f1-47af-8f22-84b57e2ac54a" />
 <img width="1959" height="844" alt="image" src="https://github.com/user-attachments/assets/a3ed26e4-872e-4982-8296-84cc1e450bba" />
@@ -164,15 +161,15 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 
 ---
 
-### D. Target Variable
+#### D. Target Variable
 - **Non-Diabetic:** 82.7%
 - **Diabetic:** 17.3%
 - ✅ Key Insight: Dataset is imbalanced. Accuracy is misleading; evaluation must emphasize **Recall, F1, ROC-AUC, PR-AUC**.
 
 ---
 
-## 2. EDA Bivariate
-  ### A. Numeric vs Diabetic
+### 2. EDA Bivariate
+  #### A. Numeric vs Diabetic
 ![Untitled](https://github.com/user-attachments/assets/13337116-05be-48ec-bfae-33702095e6c6)
 - **Interpretation**
 
@@ -189,7 +186,7 @@ Intresting : Drop-off in very high BMI bins
 BMI 63.6–80.8 → ~16.1% BMI 80.8–98.0 → ~15.4% ⚠️ This looks counterintuitive. The likely reason is small sample sizes in these extreme BMI ranges. With very few cases, percentages become unstable.
 The main signal is clear: obesity strongly increases diabetes risk. But the extreme outliers distort the tail end and we better drop outliers.
 
- ### B. Binary vs Diabetic
+ #### B. Binary vs Diabetic
 <img width="1498" height="2555" alt="image" src="https://github.com/user-attachments/assets/d22640f9-6f23-470f-8944-47e37c6fbbe6" /> <img width="1498" height="2555" alt="image" src="https://github.com/user-attachments/assets/8f090797-5ee4-4561-a58a-9121bcc590f7" />
 | Feature | % (1) in Diabetic = 1 | % (1) in Diabetic = 0 | Δ (percentage points) | Key Insight |
 |----------|-----------------------|-----------------------|------------------------|--------------|
@@ -218,19 +215,21 @@ The main signal is clear: obesity strongly increases diabetes risk. But the extr
 - **Neutral / non-predictive:**  
   Lifestyle features (`Smoker`, `PhysActivity`, `Fruits`, `Veggies`) show minimal class differences.  
 
----
-
 ✅ **Modeling Recommendation**
 - **Keep:** `HighBP`, `HighChol` (strong signal)  
 - **Consider dropping:** `CholCheck`, `AnyHealthcare`, `HvyAlcoholConsump` (low variance)  
 - **Optionally test:** `DiffWalk`, `HeartDisease/Attack` (may interact with numeric features like BMI or Age)
   
-### C.  Categoric vs Diabetic
+#### C.  Categoric vs Diabetic
 <img width="1959" height="844" alt="image" src="https://github.com/user-attachments/assets/76bba5e9-d75d-4c1d-87d1-c05a7285617e" />
 <img width="2084" height="820" alt="image" src="https://github.com/user-attachments/assets/9a28f96d-2059-4eb3-9dbf-4919c8b5a536" />
 
 **Categorical Feature Analysis (Diabetic vs Non-Diabetic)**
+<img width="1189" height="829" alt="image" src="https://github.com/user-attachments/assets/368894da-ff6c-4251-a3bc-e4d0b0bf8ffc" />
 
+The boxplots reveal that worse general health corresponds with higher BMI and poorer physical condition,
+especially among diabetic individuals.
+Mental-health effects exist but are less pronounced, suggesting physical and lifestyle factors are stronger diabetes predictors.
 | **Feature** | **Pattern / Trend Observed** | **Key Insights** |
 |--------------|------------------------------|------------------|
 | **GenHlth (General Health)** | As self-rated health improves from *Poor → Excellent*, diabetes prevalence drops sharply (41% → 3.9%). | Poor perceived health is strongly associated with higher diabetes rates. |
@@ -306,11 +305,7 @@ Positive correlations (🔵) indicate a higher likelihood of diabetes, while neg
 3. **Drop (Low Variance):** `CholCheck`, `AnyHealthcare`, `NoDocbcCost`, `HvyAlcoholConsump`
 4. **Optionally test:** `DiffWalk`, `HeartDisease/Attack` (may interact with numeric features like BMI or Age)
 
-<img width="1189" height="829" alt="image" src="https://github.com/user-attachments/assets/368894da-ff6c-4251-a3bc-e4d0b0bf8ffc" />
 
-The boxplots reveal that worse general health corresponds with higher BMI and poorer physical condition,
-especially among diabetic individuals.
-Mental-health effects exist but are less pronounced, suggesting physical and lifestyle factors are stronger diabetes predictors.
 
 ---
 
@@ -395,8 +390,10 @@ Encoded using **`OrdinalEncoder`** to preserve the natural order of categories:
 
 Non-ordered variables (such as `Sex`,'Age', etc.) were encoded using **`OneHotEncoder(drop='first')`** to prevent multicollinearity while retaining interpretability.
 
-- **3. BMI**
+### 🔹  **3. BMI**
    BMI Outlier Handling
+   <img width="452" height="230" alt="image" src="https://github.com/user-attachments/assets/409f01dd-044a-475e-bb20-6f96ef1b73db" />
+
       To ensure data stability, BMI values were **capped between 10 and 60** based on the interquartile range (IQR) method.  
       Extremely high BMI values (above 60) are considered **outliers or data-entry errors**, as they can distort statistical summaries and bias model training.  
       By filtering these unrealistic values, we maintain a more **robust and reliable distribution** that reflects real-world population health patterns.
@@ -404,8 +401,8 @@ Non-ordered variables (such as `Sex`,'Age', etc.) were encoded using **`OneHotEn
 
 ## 🤖 Modeling
 
-- **Modeling Implications**:
-  - Handle imbalance ( class weights).
+- **1. Modeling Implications**:
+  - Should Handle imbalance ( class weights).
   - **Recall, F1, ROC-AUC/PR-AUC** instead of Accuracy
       - A model could predict *everyone as non-diabetic* and still achieve **>80% accuracy**, even though it **completely fails to detect actual diabetics**. as data is imbalance
       - High accuracy in this case is misleading — it looks good, but it’s *clinically useless*.).
@@ -419,16 +416,16 @@ Non-ordered variables (such as `Sex`,'Age', etc.) were encoded using **`OneHotEn
           | **ROC-AUC** | Ability to rank diabetics higher than non-diabetics | Measures **overall discriminative power** — higher = better class separation. |
           | **PR-AUC (Precision–Recall AUC)** | Focuses on performance for the diabetic class | More informative than ROC-AUC on **imbalanced datasets**. |
       
-       -🩺 In a Diabetes Screening Context
+        -🩺 In a Diabetes Screening Context
 
-          | **Model Behavior** | **Real-World Meaning** |
-          |---------------------|------------------------|
-          | **High Recall** | Catches most diabetics → ideal for early detection. |
-          | **Low Recall** | Misses real diabetics → risky for public health screening. |
-          | **High Precision** | Fewer false alarms → more efficient for follow-up testing. |
-          | **High Accuracy but Low Recall** | Looks “good” statistically but **fails medically**. |
+      | **Model Behavior** | **Real-World Meaning** |
+      |---------------------|------------------------|
+      | **High Recall** | Catches most diabetics → ideal for early detection. |
+      | **Low Recall** | Misses real diabetics → risky for public health screening. |
+      | **High Precision** | Fewer false alarms → more efficient for follow-up testing. |
+      | **High Accuracy but Low Recall** | Looks “good” statistically but **fails medically**. |
 
- - **Baseline:** Dummy Classifier and Linesr Regression
+ - 2. **Baseline:** Dummy Classifier and Linesr Regression
  
             **Dummy Classifier:**
             ``accuracy train: 0.83``
@@ -439,7 +436,7 @@ Non-ordered variables (such as `Sex`,'Age', etc.) were encoded using **`OneHotEn
             ``recall_positive: 0``
   The dummy classifier, which always predicts the majority group, gave us a deceptively high accuracy (~83%) but provided no real value for decision-making since it failed to identify any high-risk patients (ROC-AUC = 0.5, F1 = 0). In contrast, when we established Logistic Regression as our linear baseline, the model demonstrated meaningful predictive power: while overall accuracy dropped to ~70%, it successfully distinguished between patients at higher and lower risk (ROC-AUC ≈ 0.80, PR-AUC ≈ 0.43). This shows that, unlike the dummy model, Logistic Regression offers actionable insights and can serve as a solid starting point for building more advanced predictive models.
 
- ### ⚙️ Linear Baseline (Logistic Regression)
+ - 3. ⚙️ Linear Baseline (Logistic Regression)
 
 | Metric | Score | Interpretation |
 |:--------------------------|:------:|:--------------------------------------------------------------|
@@ -459,9 +456,8 @@ Non-ordered variables (such as `Sex`,'Age', etc.) were encoded using **`OneHotEn
 - **Recall (Sensitivity)** is strong — most diabetic patients are detected (75 %).
 - **False positives (11,075)** show the model sometimes flags healthy individuals as at risk,
   but this trade-off is acceptable in **early screening**, where missing diabetic cases (false negatives) is more critical.  
-
+---
 ### 🤖 Model Performance Comparison
-#### 📋 Overview
 This report summarizes the performance of six machine learning models on the **Diabetes Prediction** dataset.  
 - **XGBoost**
 - **SVC**
@@ -472,7 +468,6 @@ This report summarizes the performance of six machine learning models on the **D
 Each model was evaluated using **Accuracy**, **ROC-AUC**, **F1**, and **Recall** metrics.  
 Timing metrics for **training**, **prediction**, and **scoring** were also recorded to assess efficiency.
 
----
 
 #### 🩺 Diabetes Risk Prediction — Model Evaluation Report
 This project evaluates multiple machine learning models for predicting **diabetes risk** using health and demographic data.  
@@ -501,42 +496,36 @@ The analysis compares models on accuracy, ROC-AUC, recall, and runtime performan
 - **Speed:**  
   XGBoost completes training + scoring in under **1 second**, far faster than SVC or KNN.
 
-
----
-
 #### Model Insights
 ##### 1️⃣ Logistic Regression
 - **Strengths:** Strong recall (0.75), good F1, easy to interpret.  
 - **Weaknesses:** Lower accuracy; limited to linear separability.  
 - **Best for:** Early screening where identifying true positives is critical.
----
 ##### 2️⃣ XGBoost
 - **Strengths:** Excellent accuracy and ROC-AUC; fastest training time.  
 - **Weaknesses:** Lower recall may miss minority-class cases.  
 - **Best for:** High-performance production use.
----
+
 ##### 3️⃣ SVC
 - **Strengths:** Balanced accuracy and AUC similar to XGBoost.  
 - **Weaknesses:** Training slower; recall limited.  
 - **Best for:** Medium-sized datasets needing robust generalization.
----
+
 ##### 4️⃣ Random Forest
 - **Strengths:** High training accuracy (0.98) and stable performance.  
 - **Weaknesses:** Overfitting (train-test gap) and long runtime.  
 - **Best for:** Feature importance analysis and interpretability in ensemble form.
----
+
 ##### 5️⃣ KNN
 - **Strengths:** Good recall; simple to implement.  
 - **Weaknesses:** Computationally expensive for prediction; sensitive to feature scaling.  
 - **Best for:** Baseline model or low-dimensional datasets.
----
 ##### 6️⃣ Decision Tree
 - **Strengths:** Fast and easy to visualize.  
 - **Weaknesses:** Overfits easily; poor generalization (AUC = 0.59).  
 - **Best for:** Quick prototypes or explainable decision rules.
 
-
-#### ⏱️ Runtime Overview
+###⏱️ Runtime Overview
 
 | Stage | Description | Notes |
 |--------|--------------|-------|
@@ -567,13 +556,15 @@ From a healthcare analytics standpoint:
 | **Fastest Model:** |⚡ **Decision Tree** (lightweight but weak AUC)|
 ---
 ### 🧩 Hyperparameter tuning
+
 Now that we’ve identified the most promising models (XGBoost, SVC, and Logistic Regression), the next step is to perform hyperparameter tuning to optimize their performance.
 This process will help fine-tune parameters such as learning rate, regularization strength, and tree depth — aiming to improve accuracy, ROC-AUC, and recall while preventing overfitting.
+
 <img width="783" height="702" alt="image" src="https://github.com/user-attachments/assets/31d90b16-b186-4d44-a7d5-743417489677" />
 ---
 ### 🧠 Selecting best model
 #### 🏁 Best Tuned Models — Hyperparameter Optimization Results
-
+ 
 After identifying the top-performing models, we conducted **hyperparameter tuning** using `GridSearchCV` and `RandomizedSearchCV`.  
 This step optimized parameters such as learning rate, regularization, and tree depth to improve overall model generalization and recall.
 
@@ -603,11 +594,34 @@ This step optimized parameters such as learning rate, regularization, and tree d
 - **Logistic Regression (Tuned)** → ❤️ **Best for medical interpretation** and recall-focused decision support.  
 - **Random Forest (Tuned)** → ⚙️ **Good secondary model** for feature importance exploration and ensemble stacking.  
 
----
+--- 
 ### 🤖 Select Best Model
 Based on tuning results, we selected XGBoost as the final model — it provides the best balance of ROC-AUC, accuracy, and runtime efficiency.
 Next, we will tune the decision threshold on a validation slice and calibrate the predicted probabilities (using techniques like Platt scaling or Isotonic regression) to further refine classification performance.
 This calibration step often boosts PR-AUC and F1-score, ensuring more reliable probability estimates and better alignment with real-world diabetes risk detection.
+#### ⚙️🎯**Threshold optimization**
+
+#### ⚙️ Threshold Tuning & Probability Calibration
+
+After selecting XGBoost as the final model, I performed decision-threshold optimization on a validation slice to maximize the F1-score.
+The procedure uses the precision-recall curve to identify the optimal cutoff (thr_star) where the harmonic mean of precision and recall is highest.
+This approach refines the model’s classification boundary beyond the default 0.5 threshold.
+
+Once the best threshold was found, we re-evaluated the tuned model on the held-out test set to measure F1, PR-AUC, and ROC-AUC at this optimal decision point.
+Additionally, XGBoost’s predicted probabilities can be further calibrated (e.g., with Platt Scaling or Isotonic Regression) to improve probability reliability—often resulting in better PR-AUC and F1 metrics in medical screening contexts.
+
+Best VAL F1: 0.48361356511779735 @ threshold = 0.23107977
+Test F1 (tuned): 0.4957191780821918
+Test PR-AUC: 0.4679131858620371
+Test ROC-AUC: 0.8102984023395083
+
+#### 🎯Calibrate Probabilities + Tune Threshold (Validation-Driven)
+
+Calibrated XGBoost probabilities with isotonic regression (via CalibratedClassifierCV) and then tune the decision threshold on a held-out validation slice to maximize F1 along the precision–recall curve. Calibration improves probability reliability; threshold tuning aligns the classifier with our operational objective (higher F1/PR-AUC in screening). The calibrated model is finally evaluated once on the untouched test set.
+
+Best VAL F1 (calibrated): 0.4843773509198275 @ threshold = 0.2559741705656052
+Calibrated Test PR-AUC: 0.4671227630649516
+Calibrated Test F1@τ* : 0.4965815403177157
 
 
 #### 🧠 Next Step
@@ -648,20 +662,41 @@ This will enhance **transparency** and **trust** in the diabetes risk prediction
 ---
 ## 📏 Evaluation 
 
-### Selected Metric: **Recall (Sensitivity)**
+### 🧠 Executive Summary: Diabetes Risk Model Performance
 
-#### ✅ Valid Interpretation
-- A **high recall** means the model successfully identifies most diabetic individuals and 73 percent is considered high.  
-- A **low recall** means the model misses many diabetics (high false negatives), which we observed in the baseline logistic regression 0.  
+#### 📊 Population Overview
+- **Total Patients Evaluated**: 46,285
+- **Diabetic Cases Identified**: 7,945  
+  → **Prevalence**: ~17.2%
 
----
+#### 📈 Model Outcomes
+- **True Positives (TP)**: 5,015 — correctly flagged diabetic patients
+- **False Positives (FP)**: 8,340 — non-diabetic patients incorrectly flagged
+- **False Negatives (FN)**: 2,930 — diabetic patients missed by the model
+- **True Negatives (TN)**: ~30,000 — correctly identified non-diabetic patients
 
-#### ✅ Rationale
-- The dataset is **imbalanced** (≈83% Non-Diabetic, 17% Diabetic).  
-- Accuracy is misleading: a model predicting “everyone = non-diabetic” achieves ~83% accuracy but 0% recall for diabetics for Dummy classifier but Linear Regression 73%.  
-- From a **business and healthcare perspective**, missing diabetics (false negatives) is far more costly than false positives:
-  - Missed cases = delayed treatment, higher future claims cost, worse patient outcomes.
-  - False positives = additional screening cost, but far less severe impact.  
+#### 📊 Key Performance Metrics
+- **Precision (Positive Predictive Value)**: ~37.6%  
+  → *Operational Insight*: Over one-third of flagged patients are truly diabetic. The remaining may require secondary screening to avoid unnecessary interventions.
+
+- **Recall (Sensitivity)**: ~63.1%  
+  → *Clinical Impact*: The model successfully identifies nearly two-thirds of diabetic cases, supporting early intervention and care prioritization.
+
+- **Specificity**: ~78.3%  
+  → *Efficiency Insight*: Most non-diabetic patients are correctly excluded, reducing unnecessary follow-ups.
+
+- **Negative Predictive Value (NPV)**: ~91.1%  
+  → *Risk Management*: Strong confidence in ruling out low-risk individuals, minimizing missed diagnoses.
+
+- **False Positive Rate (FPR)**: ~21.7%  
+  → *Resource Consideration*: One in five non-diabetic patients may be flagged, potentially impacting workflow and resource allocation.
+
+- **Accuracy**: ~75.7%  
+  → *Overall Reliability*: The model performs well across the population, with three out of four predictions being correct.
+
+- **F1 Score**: ~0.471  
+  → *Balanced Effectiveness*: Reflects a moderate trade-off between precision and recall, useful for threshold tuning and model comparison.
+
 
 ---
 
@@ -731,40 +766,6 @@ The F1 score provides a balanced measure of model performance by combining preci
 
 
 
-### 🧠 Executive Summary: Diabetes Risk Model Performance
-
-#### 📊 Population Overview
-- **Total Patients Evaluated**: 46,285
-- **Diabetic Cases Identified**: 7,945  
-  → **Prevalence**: ~17.2%
-
-#### 📈 Model Outcomes
-- **True Positives (TP)**: 5,015 — correctly flagged diabetic patients
-- **False Positives (FP)**: 8,340 — non-diabetic patients incorrectly flagged
-- **False Negatives (FN)**: 2,930 — diabetic patients missed by the model
-- **True Negatives (TN)**: ~30,000 — correctly identified non-diabetic patients
-
-#### 📊 Key Performance Metrics
-- **Precision (Positive Predictive Value)**: ~37.6%  
-  → *Operational Insight*: Over one-third of flagged patients are truly diabetic. The remaining may require secondary screening to avoid unnecessary interventions.
-
-- **Recall (Sensitivity)**: ~63.1%  
-  → *Clinical Impact*: The model successfully identifies nearly two-thirds of diabetic cases, supporting early intervention and care prioritization.
-
-- **Specificity**: ~78.3%  
-  → *Efficiency Insight*: Most non-diabetic patients are correctly excluded, reducing unnecessary follow-ups.
-
-- **Negative Predictive Value (NPV)**: ~91.1%  
-  → *Risk Management*: Strong confidence in ruling out low-risk individuals, minimizing missed diagnoses.
-
-- **False Positive Rate (FPR)**: ~21.7%  
-  → *Resource Consideration*: One in five non-diabetic patients may be flagged, potentially impacting workflow and resource allocation.
-
-- **Accuracy**: ~75.7%  
-  → *Overall Reliability*: The model performs well across the population, with three out of four predictions being correct.
-
-- **F1 Score**: ~0.471  
-  → *Balanced Effectiveness*: Reflects a moderate trade-off between precision and recall, useful for threshold tuning and model comparison.
 
 #### 🩺 Strategic Implications
 - The model is **recall-oriented**, prioritizing detection over precision—appropriate for high-risk domains like diabetes screening.
@@ -772,29 +773,6 @@ The F1 score provides a balanced measure of model performance by combining preci
 - **Threshold optimization** and **post-model triage** could improve precision without compromising recall.
 - High NPV supports **safe exclusion**, enabling confident decisions for low-risk patients.
 
-#### ⚙️🎯**Threshold optimization**
-
-#### ⚙️ Threshold Tuning & Probability Calibration
-
-After selecting XGBoost as the final model, I performed decision-threshold optimization on a validation slice to maximize the F1-score.
-The procedure uses the precision-recall curve to identify the optimal cutoff (thr_star) where the harmonic mean of precision and recall is highest.
-This approach refines the model’s classification boundary beyond the default 0.5 threshold.
-
-Once the best threshold was found, we re-evaluated the tuned model on the held-out test set to measure F1, PR-AUC, and ROC-AUC at this optimal decision point.
-Additionally, XGBoost’s predicted probabilities can be further calibrated (e.g., with Platt Scaling or Isotonic Regression) to improve probability reliability—often resulting in better PR-AUC and F1 metrics in medical screening contexts.
-
-Best VAL F1: 0.48361356511779735 @ threshold = 0.23107977
-Test F1 (tuned): 0.4957191780821918
-Test PR-AUC: 0.4679131858620371
-Test ROC-AUC: 0.8102984023395083
-
-#### 🎯Calibrate Probabilities + Tune Threshold (Validation-Driven)
-
-Calibrated XGBoost probabilities with isotonic regression (via CalibratedClassifierCV) and then tune the decision threshold on a held-out validation slice to maximize F1 along the precision–recall curve. Calibration improves probability reliability; threshold tuning aligns the classifier with our operational objective (higher F1/PR-AUC in screening). The calibrated model is finally evaluated once on the untouched test set.
-
-Best VAL F1 (calibrated): 0.4843773509198275 @ threshold = 0.2559741705656052
-Calibrated Test PR-AUC: 0.4671227630649516
-Calibrated Test F1@τ* : 0.4965815403177157
 
 ---
 ## Next steps
