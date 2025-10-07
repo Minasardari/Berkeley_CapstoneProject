@@ -370,11 +370,13 @@ This approach helps prevent class imbalance issues during model evaluation and e
 
 ---
 ## 🛠️ Feature Engineering
+ - **1. Drop features:**
+     According to EDA following Columns will be dropped as they don't have not strong assiciation with target. ['HvyAlcoholConsump', 'AnyHealthcare', 'NoDocbcCost','CholCheck','Diabetes_binary_str','BMI_group','Smoker','Stroke', 'Fruits','Veggies' ]
+ - **2. Feature Transform**
 <img width="1687" height="394" alt="image" src="https://github.com/user-attachments/assets/95c77cd0-009e-4205-af0d-aaaa364bcab3" />
 
 **ColumnTransformer** pipeline was implemented to preprocess the dataset before modeling.  
 Each feature type was handled using an appropriate transformation to improve consistency, interpretability, and model performance.
-
 
 ### 🔹 Numerical Features
 Features such as `BMI`, `MentHlth`, `PhysHlth`, `HighBP`, `HighChol`, `HeartDiseaseorAttack`, `PhysActivity`, and `DiffWalk` were standardized using **`StandardScaler`** to ensure all numeric inputs share a similar range and distribution.
@@ -393,77 +395,191 @@ Encoded using **`OrdinalEncoder`** to preserve the natural order of categories:
 
 Non-ordered variables (such as `Sex`,'Age', etc.) were encoded using **`OneHotEncoder(drop='first')`** to prevent multicollinearity while retaining interpretability.
 
+- **3. BMI**
+   BMI Outlier Handling
+      To ensure data stability, BMI values were **capped between 10 and 60** based on the interquartile range (IQR) method.  
+      Extremely high BMI values (above 60) are considered **outliers or data-entry errors**, as they can distort statistical summaries and bias model training.  
+      By filtering these unrealistic values, we maintain a more **robust and reliable distribution** that reflects real-world population health patterns.
 ---
 
 ## 🤖 Modeling
 
 - **Modeling Implications**:
   - Handle imbalance ( class weights).
-  - Use **Recall, F1, ROC-AUC/PR-AUC** instead of Accuracy
+  - **Recall, F1, ROC-AUC/PR-AUC** instead of Accuracy
       - A model could predict *everyone as non-diabetic* and still achieve **>80% accuracy**, even though it **completely fails to detect actual diabetics**. as data is imbalance
       - High accuracy in this case is misleading — it looks good, but it’s *clinically useless*.).
       - ✅ Better Metrics for Medical Screening
 
-                  | **Metric** | **What It Measures** | **Why It Matters for Diabetes** |
-                  |-------------|----------------------|----------------------------------|
-                  | **Recall (Sensitivity)** | % of actual diabetics correctly identified | Missing diabetics (false negatives) can delay treatment — recall ensures we **catch as many diabetics as possible**. |
-                  | **Precision** | % of predicted diabetics who are actually diabetic | Avoids unnecessary alarms or testing for healthy people. |
-                  | **F1 Score** | Harmonic mean of precision & recall | Balances false negatives and false positives — ideal for **imbalanced data**. |
-                  | **ROC-AUC** | Ability to rank diabetics higher than non-diabetics | Measures **overall discriminative power** — higher = better class separation. |
-                  | **PR-AUC (Precision–Recall AUC)** | Focuses on performance for the diabetic class | More informative than ROC-AUC on **imbalanced datasets**. |
+          | **Metric** | **What It Measures** | **Why It Matters for Diabetes** |
+          |-------------|----------------------|----------------------------------|
+          | **Recall (Sensitivity)** | % of actual diabetics correctly identified | Missing diabetics (false negatives) can delay treatment — recall ensures we **catch as many diabetics as possible**. |
+          | **Precision** | % of predicted diabetics who are actually diabetic | Avoids unnecessary alarms or testing for healthy people. |
+          | **F1 Score** | Harmonic mean of precision & recall | Balances false negatives and false positives — ideal for **imbalanced data**. |
+          | **ROC-AUC** | Ability to rank diabetics higher than non-diabetics | Measures **overall discriminative power** — higher = better class separation. |
+          | **PR-AUC (Precision–Recall AUC)** | Focuses on performance for the diabetic class | More informative than ROC-AUC on **imbalanced datasets**. |
         -🩺 In a Diabetes Screening Context
 
-                  | **Model Behavior** | **Real-World Meaning** |
-                  |---------------------|------------------------|
-                  | **High Recall** | Catches most diabetics → ideal for early detection. |
-                  | **Low Recall** | Misses real diabetics → risky for public health screening. |
-                  | **High Precision** | Fewer false alarms → more efficient for follow-up testing. |
-                  | **High Accuracy but Low Recall** | Looks “good” statistically but **fails medically**. |
+          | **Model Behavior** | **Real-World Meaning** |
+          |---------------------|------------------------|
+          | **High Recall** | Catches most diabetics → ideal for early detection. |
+          | **Low Recall** | Misses real diabetics → risky for public health screening. |
+          | **High Precision** | Fewer false alarms → more efficient for follow-up testing. |
+          | **High Accuracy but Low Recall** | Looks “good” statistically but **fails medically**. |
 
-  - Include interaction features for logistic regression.
-  - Will use **tree-based models** (Desion Tree or RandomForest, XGBoost) for capturing nonlinear + interaction effects automatically.
-  - BMI Outlier Handling
-      To ensure data stability, BMI values were **capped between 10 and 60** based on the interquartile range (IQR) method.  
-      Extremely high BMI values (above 60) are considered **outliers or data-entry errors**, as they can distort statistical summaries and bias model training.  
-      By filtering these unrealistic values, we maintain a more **robust and reliable distribution** that reflects real-world population health patterns.
----
+       - Will use **tree-based models** (Desion Tree or RandomForest, XGBoost) for capturing nonlinear + interaction effects automatically.
 
 - **Baseline:** Dummy Classifier and Linesr Regression
 results:
 **Dummy Classifier:**
-``accuracy train: 0.8292672193281148``
+``accuracy train: 0.83``
 
-``accuracy test: 0.829273659427465``
+``accuracy test: 0.83``
 
 ``roc_auc: 0.5``
 
 ``f1_positive: 0.0``
 
-``pr_auc: 0.17072634057253505``
+``pr_auc: 0.17``
 ``recall_positive: 0``
 
+- The dummy classifier, which always predicts the majority group, gave us a deceptively high accuracy (~83%) but provided no real value for decision-making since it failed to identify any high-risk patients (ROC-AUC = 0.5, F1 = 0). In contrast, when we established Logistic Regression as our linear baseline, the model demonstrated meaningful predictive power: while overall accuracy dropped to ~70%, it successfully distinguished between patients at higher and lower risk (ROC-AUC ≈ 0.80, PR-AUC ≈ 0.43). This shows that, unlike the dummy model, Logistic Regression offers actionable insights and can serve as a solid starting point for building more advanced predictive models.
 
-**Linear baseline (LogisticRegression):**
+ ### ⚙️ Linear Baseline (Logistic Regression)
 
-``accuracy train: 0.7000``
+| Metric | Score | Interpretation |
+|:--------------------------|:------:|:--------------------------------------------------------------|
+| **Accuracy (Train)**      | 0.71   | Model fits training data moderately well — no major overfitting detected. |
+| **Accuracy (Test)**       | 0.71   | Generalizes similarly on unseen data, confirming stable performance. |
+| **ROC-AUC**               | 0.80   | Strong discriminative ability between diabetic and non-diabetic classes. |
+| **F1 (Positive Class)**   | 0.47   | Moderate balance between precision and recall for diabetic detection. |
+| **PR-AUC**                | 0.43   | Moderate precision-recall trade-off, suitable for imbalanced data. |
+| **Recall (Positive Class)** | 0.75 | Captures 75 % of true diabetic cases — good sensitivity for early-risk screening. |
 
-``accuracy test: 0.6994``
+- **Strong sensitivity**: `recall_positive = 0.71` → the model correctly identifies ~71% of actual diabetic cases.  
+- **Meaningful ranking power**: `roc_auc ≈ 0.80` and `pr_auc ≈ 0.43` show the model can effectively separate high-risk from low-risk patients.  
+- **Trade-off visible**: `f1_positive ≈ 0.47` with overall accuracy around 70% — expected when prioritizing recall of positive cases over general accuracy.
+<img width="605" height="432" alt="image" src="https://github.com/user-attachments/assets/6183c6ea-4b43-4f1b-8218-9f51ce28bc21" />
+- The model correctly identifies **26,243 non-diabetic** and **5,662 diabetic** cases.  
+- **Recall (Sensitivity)** is strong — most diabetic patients are detected (75 %).  
+- **False positives (11,075)** show the model sometimes flags healthy individuals as at risk,  
+  but this trade-off is acceptable in **early screening**, where missing diabetic cases (false negatives) is more critical.  
 
-``roc_auc: 0.7856``
+### 🤖 Model Performance Comparison
+#### 📋 Overview
+This report summarizes the performance of six machine learning models on the **Diabetes Prediction** dataset.  
+- **XGBoost**
+- **SVC**
+- **Decision Tree** 
+- **Random Forest**
+- **Logistic Regression**
+-  **KNN**
+Each model was evaluated using **Accuracy**, **ROC-AUC**, **F1**, and **Recall** metrics.  
+Timing metrics for **training**, **prediction**, and **scoring** were also recorded to assess efficiency.
 
-``f1_positive: 0.4540``
+---
 
-``pr_auc: 0.4178``
+#### 🩺 Diabetes Risk Prediction — Model Evaluation Report
 
-``recall_positive: 0.7321``
-- The dummy classifier, which always predicts the majority group, gave us a deceptively high accuracy (~83%) but provided no real value for decision-making since it failed to identify any high-risk patients (ROC-AUC = 0.5, F1 = 0). In contrast, when we established Logistic Regression as our linear baseline, the model demonstrated meaningful predictive power: while overall accuracy dropped to ~70%, it successfully distinguished between patients at higher and lower risk (ROC-AUC ≈ 0.79, PR-AUC ≈ 0.42). This shows that, unlike the dummy model, Logistic Regression offers actionable insights and can serve as a solid starting point for building more advanced predictive models.
+##### 📖 Overview
+This project evaluates multiple machine learning models for predicting **diabetes risk** using health and demographic data.  
+The analysis compares models on accuracy, ROC-AUC, recall, and runtime performance to determine the best fit for real-world healthcare applications.
 
- ###📊 Linear Baseline (Logistic Regression) – Key Results
+##### 🧩 Model Performance Comparison
 
-- **Strong sensitivity**: `recall_positive = 0.7321` → the model correctly identifies ~73% of actual diabetic cases.  
-- **Meaningful ranking power**: `roc_auc ≈ 0.786` and `pr_auc ≈ 0.418` show the model can effectively separate high-risk from low-risk patients.  
-- **Trade-off visible**: `f1_positive ≈ 0.454` with overall accuracy around 70% — expected when prioritizing recall of positive cases over general accuracy.
-- 
+| Rank | Model | Accuracy (Train) | Accuracy (Test) | ROC-AUC | F1 (Positive) | Recall (Positive) | Total Time (s) | Notes |
+|------|--------|------------------|-----------------|----------|----------------|-------------------|----------------|-------|
+| 🥇 1 | **XGBoost** | 0.85 | **0.84** | 0.80 | 0.27 | 0.18 | **0.92** | ✅ Best trade-off between accuracy, generalization, and speed. Efficient for deployment. |
+| 🥈 2 | **SVC** | 0.84 | **0.84** | **0.80** | 0.26 | 0.17 | 7.76 | High accuracy but slower; useful if runtime is less critical. |
+| 🥉 3 | **Logistic Regression** | 0.71 | 0.71 | **0.80** | **0.47** | **0.75** | 3.75 | Excellent recall; interpretable model for screening use-case. |
+| 4 | **Random Forest** | **0.97** | 0.82 | 0.75 | 0.28 | 0.21 | 22.36 | Overfitted (train ≫ test); strong but inefficient. |
+| 5 | **KNN** | 0.87 | 0.82 | 0.70 | 0.30 | 0.23 | 15.46 | Acceptable results, but very slow at prediction time. |
+| 6 | **Decision Tree** | **0.97** | 0.77 | 0.59 | 0.31 | 0.31 | 1.35 | Highly overfitted; poor ROC-AUC and generalization. |
+
+##### 💡 Analysis Summary
+
+- **Generalization:**  
+  XGBoost shows minimal gap between training (0.85) and testing (0.84) accuracy → excellent bias–variance balance.  
+  Random Forest and Decision Tree clearly overfit.
+
+- **Sensitivity (Recall):**  
+  Logistic Regression detects the most positive (diabetic) cases — critical for medical screening.
+
+- **Speed:**  
+  XGBoost completes training + scoring in under **1 second**, far faster than SVC or KNN.
+
+
+---
+
+#### Model Insights
+##### 1️⃣ Logistic Regression
+- **Strengths:** Strong recall (0.75), good F1, easy to interpret.  
+- **Weaknesses:** Lower accuracy; limited to linear separability.  
+- **Best for:** Early screening where identifying true positives is critical.
+---
+##### 2️⃣ XGBoost
+- **Strengths:** Excellent accuracy and ROC-AUC; fastest training time.  
+- **Weaknesses:** Lower recall may miss minority-class cases.  
+- **Best for:** High-performance production use.
+---
+##### 3️⃣ SVC
+- **Strengths:** Balanced accuracy and AUC similar to XGBoost.  
+- **Weaknesses:** Training slower; recall limited.  
+- **Best for:** Medium-sized datasets needing robust generalization.
+---
+##### 4️⃣ Random Forest
+- **Strengths:** High training accuracy (0.98) and stable performance.  
+- **Weaknesses:** Overfitting (train-test gap) and long runtime.  
+- **Best for:** Feature importance analysis and interpretability in ensemble form.
+---
+##### 5️⃣ KNN
+- **Strengths:** Good recall; simple to implement.  
+- **Weaknesses:** Computationally expensive for prediction; sensitive to feature scaling.  
+- **Best for:** Baseline model or low-dimensional datasets.
+---
+##### 6️⃣ Decision Tree
+- **Strengths:** Fast and easy to visualize.  
+- **Weaknesses:** Overfits easily; poor generalization (AUC = 0.59).  
+- **Best for:** Quick prototypes or explainable decision rules.
+---
+
+## ⏱️ Runtime Overview
+
+| Stage | Description | Notes |
+|--------|--------------|-------|
+| **Train Time** | Time taken to fit the model. | RF and SVC were the slowest. |
+| **Predict Time** | Time taken to generate predictions. | KNN was the most time-intensive. |
+| **Score Time** | Evaluation time for metrics. | Minimal variance across models. |
+| **Total Time** | Aggregate runtime. | XGBoost provided best efficiency-performance ratio. |
+  
+
+##### 📋 Business Perspective
+
+From a healthcare analytics standpoint:
+
+- **XGBoost** is the best choice for production — **accurate, stable, and fast**.  
+  It can power large-scale diabetes risk screening efficiently.
+
+- **Logistic Regression** remains valuable for clinical decision support where **interpretability** and **high recall** (catching at-risk patients) are essential.
+
+- Avoid overfitted models like **Decision Tree** and **Random Forest** for deployment.
+
+---
+
+##### 🚀 Recommendation Summary
+
+| Objective | Recommended Model | Rationale |
+|------------|------------------|------------|
+| **Accurate & Fast Screening Tool** | 🥇 **XGBoost** | High accuracy + minimal overfitting + runtime < 1 s |
+| **Clinical Decision Support** | 🥉 **Logistic Regression** | Transparent coefficients, top recall |
+| **Exploratory / Research** | 🌳Random Forest | Good for feature-importance exploration only  (train-test gap noticeable)   |
+| **Fastest Model:** |⚡ **Decision Tree** (lightweight but weak AUC)|
+
+### 🧩 Hyperparameter tuning
+<img width="783" height="702" alt="image" src="https://github.com/user-attachments/assets/31d90b16-b186-4d44-a7d5-743417489677" />
+
+### 🧠 Selecting best model
+
 ## 📏 Evaluation Metric
 
 ### Selected Metric: **Recall (Sensitivity)**
