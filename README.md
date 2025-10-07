@@ -29,7 +29,7 @@ Early detection of diabetes is crucial to preventing serious complications such 
   - **1 → Diabetic**
  
 - #### **Methodology used**
- reprocessing & EDA CRISP-DM, Data Preparation (cleaning missing values, encoding categorical features, scaling numerical attributes), Correlation analysis and visualization Feature engineering Model comparison and selecting a model (Logistic Regression, Decision Tree, KNN, SVC/SVM) Also anticipate to use some other concept related to upcoming modules Random Forest and AdaBoost or Neural Networks Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
+- reprocessing & EDA CRISP-DM, Data Preparation (cleaning missing values, encoding categorical features, scaling numerical attributes), Correlation analysis and visualization Feature engineering Model comparison and selecting a model (Logistic Regression, Decision Tree, KNN, SVC/SVM) Also anticipate to use some other concept related to upcoming modules Random Forest and AdaBoost or Neural Networks Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
 ---
 ## 📂 Dataset
 - Source: Public health survey (binary target = Diabetic).  
