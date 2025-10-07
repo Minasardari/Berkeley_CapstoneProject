@@ -268,7 +268,6 @@ These insights highlight the importance of **targeted public health intervention
  **Feature Correlation with Diabetes**
 
 This chart and table summarize how strongly each feature correlates with the **Diabetic** outcome.  
-Positive correlations (🔵) indicate a higher likelihood of diabetes, while negative correlations (🔴) suggest protective or inverse effects.
 
 | Rank | Feature | Correlation | Interpretation | Decision |
 |------|----------|-------------|----------------|----------------|
@@ -635,10 +634,6 @@ This will enhance **transparency** and **trust** in the diabetes risk prediction
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/8aca29e2-06d9-49db-9203-6d77869ef579" />
 <img width="289" height="300" alt="image" src="https://github.com/user-attachments/assets/9da7e24f-e44d-49ed-8ec2-0007bf881a15" />
 
-
-
-### 🧠 Feature Importance Analysis
-
 #### 🔹 Top Predictors Identified (XGBoost)
 
 | Rank | Feature | Interpretation |
@@ -750,7 +745,6 @@ This will enhance **transparency** and **trust** in the diabetes risk prediction
 - Provide insights into **key health, lifestyle, and socioeconomic risk factors**.  
 - Develop a predictive model that balances sensitivity (recall for diabetics) with precision.  
 - Support public health strategies by identifying high-risk groups (e.g., obese, hypertensive, low income/education).
-- 
 
 ## Next steps
 
