@@ -364,7 +364,7 @@ features = ["BMI", "PhysHlth", "MentHlth"]
 3. **Access Barriers**: Address affordability gaps (9% skip care due to cost) to reduce long-term disease burden.  
 4. **Modeling Focus**: Use advanced ML models that balance precision and recall, ensuring at-risk members are identified early for **preventive outreach and resource allocation**.  
 ---
-## 🛠️ ✂️ Train/Test split
+## ✂️ Train/Test split
 To prepare the dataset for model training and evaluation, a stratified train-test split was applied. The data was divided into 80% for training and 20% for testing, using a fixed random state (42) to ensure reproducibility. The stratification parameter was included to maintain the same proportion of diabetic and non-diabetic cases in both subsets.
 This approach helps prevent class imbalance issues during model evaluation and ensures that performance metrics accurately reflect the model’s ability to generalize across both classes.
 
@@ -418,7 +418,8 @@ Non-ordered variables (such as `Sex`,'Age', etc.) were encoded using **`OneHotEn
           | **F1 Score** | Harmonic mean of precision & recall | Balances false negatives and false positives — ideal for **imbalanced data**. |
           | **ROC-AUC** | Ability to rank diabetics higher than non-diabetics | Measures **overall discriminative power** — higher = better class separation. |
           | **PR-AUC (Precision–Recall AUC)** | Focuses on performance for the diabetic class | More informative than ROC-AUC on **imbalanced datasets**. |
-        -🩺 In a Diabetes Screening Context
+      
+       -🩺 In a Diabetes Screening Context
 
           | **Model Behavior** | **Real-World Meaning** |
           |---------------------|------------------------|
@@ -427,9 +428,7 @@ Non-ordered variables (such as `Sex`,'Age', etc.) were encoded using **`OneHotEn
           | **High Precision** | Fewer false alarms → more efficient for follow-up testing. |
           | **High Accuracy but Low Recall** | Looks “good” statistically but **fails medically**. |
 
-       - Will use **tree-based models** (Desion Tree or RandomForest, XGBoost) for capturing nonlinear + interaction effects automatically.
-
-- **Baseline:** Dummy Classifier and Linesr Regression
+ - **Baseline:** Dummy Classifier and Linesr Regression
  
             **Dummy Classifier:**
             ``accuracy train: 0.83``
@@ -455,9 +454,10 @@ Non-ordered variables (such as `Sex`,'Age', etc.) were encoded using **`OneHotEn
 - **Meaningful ranking power**: `roc_auc ≈ 0.80` and `pr_auc ≈ 0.43` show the model can effectively separate high-risk from low-risk patients.  
 - **Trade-off visible**: `f1_positive ≈ 0.47` with overall accuracy around 70% — expected when prioritizing recall of positive cases over general accuracy.
 <img width="605" height="432" alt="image" src="https://github.com/user-attachments/assets/6183c6ea-4b43-4f1b-8218-9f51ce28bc21" />
-- The model correctly identifies **26,243 non-diabetic** and **5,662 diabetic** cases.  
-- **Recall (Sensitivity)** is strong — most diabetic patients are detected (75 %).  
-- **False positives (11,075)** show the model sometimes flags healthy individuals as at risk,  
+
+- The model correctly identifies **26,243 non-diabetic** and **5,662 diabetic** cases.
+- **Recall (Sensitivity)** is strong — most diabetic patients are detected (75 %).
+- **False positives (11,075)** show the model sometimes flags healthy individuals as at risk,
   but this trade-off is acceptable in **early screening**, where missing diabetic cases (false negatives) is more critical.  
 
 ### 🤖 Model Performance Comparison
@@ -475,12 +475,10 @@ Timing metrics for **training**, **prediction**, and **scoring** were also recor
 ---
 
 #### 🩺 Diabetes Risk Prediction — Model Evaluation Report
-
-##### 📖 Overview
 This project evaluates multiple machine learning models for predicting **diabetes risk** using health and demographic data.  
 The analysis compares models on accuracy, ROC-AUC, recall, and runtime performance to determine the best fit for real-world healthcare applications.
 
-##### 🧩 Model Performance Comparison
+#### Model Performance Comparison
 
 | Rank | Model | Accuracy (Train) | Accuracy (Test) | ROC-AUC | F1 (Positive) | Recall (Positive) | Total Time (s) | Notes |
 |------|--------|------------------|-----------------|----------|----------------|-------------------|----------------|-------|
@@ -491,7 +489,7 @@ The analysis compares models on accuracy, ROC-AUC, recall, and runtime performan
 | 5 | **KNN** | 0.87 | 0.82 | 0.70 | 0.30 | 0.23 | 15.46 | Acceptable results, but very slow at prediction time. |
 | 6 | **Decision Tree** | **0.97** | 0.77 | 0.59 | 0.31 | 0.31 | 1.35 | Highly overfitted; poor ROC-AUC and generalization. |
 
-##### 💡 Analysis Summary
+#### 💡 Analysis Summary
 
 - **Generalization:**  
   XGBoost shows minimal gap between training (0.85) and testing (0.84) accuracy → excellent bias–variance balance.  
@@ -536,9 +534,9 @@ The analysis compares models on accuracy, ROC-AUC, recall, and runtime performan
 - **Strengths:** Fast and easy to visualize.  
 - **Weaknesses:** Overfits easily; poor generalization (AUC = 0.59).  
 - **Best for:** Quick prototypes or explainable decision rules.
----
 
-## ⏱️ Runtime Overview
+
+#### ⏱️ Runtime Overview
 
 | Stage | Description | Notes |
 |--------|--------------|-------|
@@ -548,7 +546,7 @@ The analysis compares models on accuracy, ROC-AUC, recall, and runtime performan
 | **Total Time** | Aggregate runtime. | XGBoost provided best efficiency-performance ratio. |
   
 
-##### 📋 Business Perspective
+#### 📋 Business Perspective
 
 From a healthcare analytics standpoint:
 
@@ -557,9 +555,7 @@ From a healthcare analytics standpoint:
 
 - **Logistic Regression** remains valuable for clinical decision support where **interpretability** and **high recall** (catching at-risk patients) are essential.
 
-- Avoid overfitted models like **Decision Tree** and **Random Forest** for deployment.
-
----
+- overfitted models like **Decision Tree** and **Random Forest** for deployment should be avoided.
 
 ##### 🚀 Recommendation Summary
 
@@ -569,12 +565,12 @@ From a healthcare analytics standpoint:
 | **Clinical Decision Support** | 🥉 **Logistic Regression** | Transparent coefficients, top recall |
 | **Exploratory / Research** | 🌳Random Forest | Good for feature-importance exploration only  (train-test gap noticeable)   |
 | **Fastest Model:** |⚡ **Decision Tree** (lightweight but weak AUC)|
-
+---
 ### 🧩 Hyperparameter tuning
 Now that we’ve identified the most promising models (XGBoost, SVC, and Logistic Regression), the next step is to perform hyperparameter tuning to optimize their performance.
 This process will help fine-tune parameters such as learning rate, regularization strength, and tree depth — aiming to improve accuracy, ROC-AUC, and recall while preventing overfitting.
 <img width="783" height="702" alt="image" src="https://github.com/user-attachments/assets/31d90b16-b186-4d44-a7d5-743417489677" />
-
+---
 ### 🧠 Selecting best model
 #### 🏁 Best Tuned Models — Hyperparameter Optimization Results
 
@@ -590,8 +586,7 @@ This step optimized parameters such as learning rate, regularization, and tree d
 | 5 | **Decision Tree** | {'criterion': 'entropy', 'max_depth': 10, 'min_samples_split': 10} | 40.88 | 0.779 | **0.839** | 0.835 | 0.789 | 0.427 | 0.262 |
 | 6 | **KNN** | {'algorithm': 'brute', 'n_jobs': -1, 'n_neighbors': 9, 'p': 2, 'weights': 'uniform'} | 470.92 | 0.738 | **0.850** | 0.826 | 0.741 | 0.357 | 0.300 |
 
----
-
+ 
 #### 🔧 Interpretation
 
 - **XGBoost** again achieved the **highest overall ROC-AUC (0.81)** and balanced performance with a moderate training time (~312 s).  
@@ -600,7 +595,7 @@ This step optimized parameters such as learning rate, regularization, and tree d
 - **Random Forest** performed similarly in recall/F1 but with heavy computation time (>1100 s).  
 - **KNN** showed strong training accuracy but generalization dropped — confirming it is less efficient and prone to overfitting.  
 
----
+ 
 
 #### 💼 Business Recommendation
 
@@ -614,29 +609,8 @@ Based on tuning results, we selected XGBoost as the final model — it provides 
 Next, we will tune the decision threshold on a validation slice and calibrate the predicted probabilities (using techniques like Platt scaling or Isotonic regression) to further refine classification performance.
 This calibration step often boosts PR-AUC and F1-score, ensuring more reliable probability estimates and better alignment with real-world diabetes risk detection.
 
-####⚙️ Threshold Tuning & Probability Calibration
 
-After selecting XGBoost as the final model, I performed decision-threshold optimization on a validation slice to maximize the F1-score.
-The procedure uses the precision-recall curve to identify the optimal cutoff (thr_star) where the harmonic mean of precision and recall is highest.
-This approach refines the model’s classification boundary beyond the default 0.5 threshold.
-
-Once the best threshold was found, we re-evaluated the tuned model on the held-out test set to measure F1, PR-AUC, and ROC-AUC at this optimal decision point.
-Additionally, XGBoost’s predicted probabilities can be further calibrated (e.g., with Platt Scaling or Isotonic Regression) to improve probability reliability—often resulting in better PR-AUC and F1 metrics in medical screening contexts.
-
-Best VAL F1: 0.48361356511779735 @ threshold = 0.23107977
-Test F1 (tuned): 0.4957191780821918
-Test PR-AUC: 0.4679131858620371
-Test ROC-AUC: 0.8102984023395083
-
-####🎯Calibrate Probabilities + Tune Threshold (Validation-Driven)
-
-Calibrated XGBoost probabilities with isotonic regression (via CalibratedClassifierCV) and then tune the decision threshold on a held-out validation slice to maximize F1 along the precision–recall curve. Calibration improves probability reliability; threshold tuning aligns the classifier with our operational objective (higher F1/PR-AUC in screening). The calibrated model is finally evaluated once on the untouched test set.
-
-Best VAL F1 (calibrated): 0.4843773509198275 @ threshold = 0.2559741705656052
-Calibrated Test PR-AUC: 0.4671227630649516
-Calibrated Test F1@τ* : 0.4965815403177157
-
-####🧠 Next Step
+#### 🧠 Next Step
 
 Continue with **model explainability** using **SHAP** or **Permutation Importance** to interpret top features influencing predictions.  
 This will enhance **transparency** and **trust** in the diabetes risk prediction pipeline.
@@ -647,9 +621,10 @@ This will enhance **transparency** and **trust** in the diabetes risk prediction
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/442532a9-7a49-40b1-8fa3-02772a43f8b2" />
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/8aca29e2-06d9-49db-9203-6d77869ef579" />
 <img width="289" height="300" alt="image" src="https://github.com/user-attachments/assets/9da7e24f-e44d-49ed-8ec2-0007bf881a15" />
+
 ### 🧠 Feature Importance Analysis
 
-### 🔹 Top Predictors Identified (XGBoost)
+#### 🔹 Top Predictors Identified (XGBoost)
 
 | Rank | Feature | Interpretation |
 |------|----------|----------------|
@@ -663,6 +638,7 @@ This will enhance **transparency** and **trust** in the diabetes risk prediction
 | 8️⃣ |**MentHlth (Mental Health Days)** | Chronic stress or poor mental health can contribute to metabolic issues. |
 | 9️⃣ | **HeartDiseaseorAttack** |Cardiovascular history aligns with higher diabetes risk predictions. |
 | 🔟 |**DiffWalk / PhysHlth** | Reduced mobility and poor physical health contribute modestly but meaningfully. |
+
 #### 🩺 Insights
 - **Self-perceived health (GenHlth)** is the single most predictive variable — a strong proxy for multiple underlying risks.  
 -  Lifestyle and metabolic factors**BMI**, and **Blood Pressure/Cholesterol** dominate the model’s decision process.  
@@ -796,10 +772,34 @@ The F1 score provides a balanced measure of model performance by combining preci
 - **Threshold optimization** and **post-model triage** could improve precision without compromising recall.
 - High NPV supports **safe exclusion**, enabling confident decisions for low-risk patients.
 
-- 
-#### Next steps
+#### ⚙️🎯**Threshold optimization**
+
+#### ⚙️ Threshold Tuning & Probability Calibration
+
+After selecting XGBoost as the final model, I performed decision-threshold optimization on a validation slice to maximize the F1-score.
+The procedure uses the precision-recall curve to identify the optimal cutoff (thr_star) where the harmonic mean of precision and recall is highest.
+This approach refines the model’s classification boundary beyond the default 0.5 threshold.
+
+Once the best threshold was found, we re-evaluated the tuned model on the held-out test set to measure F1, PR-AUC, and ROC-AUC at this optimal decision point.
+Additionally, XGBoost’s predicted probabilities can be further calibrated (e.g., with Platt Scaling or Isotonic Regression) to improve probability reliability—often resulting in better PR-AUC and F1 metrics in medical screening contexts.
+
+Best VAL F1: 0.48361356511779735 @ threshold = 0.23107977
+Test F1 (tuned): 0.4957191780821918
+Test PR-AUC: 0.4679131858620371
+Test ROC-AUC: 0.8102984023395083
+
+#### 🎯Calibrate Probabilities + Tune Threshold (Validation-Driven)
+
+Calibrated XGBoost probabilities with isotonic regression (via CalibratedClassifierCV) and then tune the decision threshold on a held-out validation slice to maximize F1 along the precision–recall curve. Calibration improves probability reliability; threshold tuning aligns the classifier with our operational objective (higher F1/PR-AUC in screening). The calibrated model is finally evaluated once on the untouched test set.
+
+Best VAL F1 (calibrated): 0.4843773509198275 @ threshold = 0.2559741705656052
+Calibrated Test PR-AUC: 0.4671227630649516
+Calibrated Test F1@τ* : 0.4965815403177157
+
+---
+## Next steps
 What suggestions do you have for next steps?
-# 🧾 Main Takeaways, Business Recommendations & Future Work
+#### 🧾 Main Takeaways, Business Recommendations & Future Work
 
 ### 🧩 **Key Findings**
 
