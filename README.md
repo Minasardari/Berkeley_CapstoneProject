@@ -576,6 +576,8 @@ From a healthcare analytics standpoint:
 | **Fastest Model:** |⚡ **Decision Tree** (lightweight but weak AUC)|
 
 ### 🧩 Hyperparameter tuning
+Now that we’ve identified the most promising models (XGBoost, SVC, and Logistic Regression), the next step is to perform hyperparameter tuning to optimize their performance.
+This process will help fine-tune parameters such as learning rate, regularization strength, and tree depth — aiming to improve accuracy, ROC-AUC, and recall while preventing overfitting.
 <img width="783" height="702" alt="image" src="https://github.com/user-attachments/assets/31d90b16-b186-4d44-a7d5-743417489677" />
 
 ### 🧠 Selecting best model
