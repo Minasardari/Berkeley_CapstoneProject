@@ -561,8 +561,11 @@ Now that we’ve identified the most promising models (XGBoost, SVC, and Logisti
 This process will help fine-tune parameters such as learning rate, regularization strength, and tree depth — aiming to improve accuracy, ROC-AUC, and recall while preventing overfitting.
 
 <img width="783" height="702" alt="image" src="https://github.com/user-attachments/assets/31d90b16-b186-4d44-a7d5-743417489677" />
+
 ---
+
 ### 🧠 Selecting best model
+
 #### 🏁 Best Tuned Models — Hyperparameter Optimization Results
  
 After identifying the top-performing models, we conducted **hyperparameter tuning** using `GridSearchCV` and `RandomizedSearchCV`.  
@@ -601,7 +604,7 @@ Next, we will tune the decision threshold on a validation slice and calibrate th
 This calibration step often boosts PR-AUC and F1-score, ensuring more reliable probability estimates and better alignment with real-world diabetes risk detection.
 #### ⚙️🎯**Threshold optimization**
 
-#### ⚙️ Threshold Tuning & Probability Calibration
+- ####1. ⚙️ Threshold Tuning & Probability Calibration
 
 After selecting XGBoost as the final model, I performed decision-threshold optimization on a validation slice to maximize the F1-score.
 The procedure uses the precision-recall curve to identify the optimal cutoff (thr_star) where the harmonic mean of precision and recall is highest.
@@ -615,7 +618,7 @@ Test F1 (tuned): 0.4957191780821918
 Test PR-AUC: 0.4679131858620371
 Test ROC-AUC: 0.8102984023395083
 
-#### 🎯Calibrate Probabilities + Tune Threshold (Validation-Driven)
+- ####2. 🎯Calibrate Probabilities + Tune Threshold (Validation-Driven)
 
 Calibrated XGBoost probabilities with isotonic regression (via CalibratedClassifierCV) and then tune the decision threshold on a held-out validation slice to maximize F1 along the precision–recall curve. Calibration improves probability reliability; threshold tuning aligns the classifier with our operational objective (higher F1/PR-AUC in screening). The calibrated model is finally evaluated once on the untouched test set.
 
@@ -635,6 +638,8 @@ This will enhance **transparency** and **trust** in the diabetes risk prediction
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/442532a9-7a49-40b1-8fa3-02772a43f8b2" />
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/8aca29e2-06d9-49db-9203-6d77869ef579" />
 <img width="289" height="300" alt="image" src="https://github.com/user-attachments/assets/9da7e24f-e44d-49ed-8ec2-0007bf881a15" />
+
+
 
 ### 🧠 Feature Importance Analysis
 
@@ -662,8 +667,6 @@ This will enhance **transparency** and **trust** in the diabetes risk prediction
 ---
 ## 📏 Evaluation 
 
-### 🧠 Executive Summary: Diabetes Risk Model Performance
-
 #### 📊 Population Overview
 - **Total Patients Evaluated**: 46,285
 - **Diabetic Cases Identified**: 7,945  
@@ -674,41 +677,6 @@ This will enhance **transparency** and **trust** in the diabetes risk prediction
 - **False Positives (FP)**: 8,340 — non-diabetic patients incorrectly flagged
 - **False Negatives (FN)**: 2,930 — diabetic patients missed by the model
 - **True Negatives (TN)**: ~30,000 — correctly identified non-diabetic patients
-
-#### 📊 Key Performance Metrics
-- **Precision (Positive Predictive Value)**: ~37.6%  
-  → *Operational Insight*: Over one-third of flagged patients are truly diabetic. The remaining may require secondary screening to avoid unnecessary interventions.
-
-- **Recall (Sensitivity)**: ~63.1%  
-  → *Clinical Impact*: The model successfully identifies nearly two-thirds of diabetic cases, supporting early intervention and care prioritization.
-
-- **Specificity**: ~78.3%  
-  → *Efficiency Insight*: Most non-diabetic patients are correctly excluded, reducing unnecessary follow-ups.
-
-- **Negative Predictive Value (NPV)**: ~91.1%  
-  → *Risk Management*: Strong confidence in ruling out low-risk individuals, minimizing missed diagnoses.
-
-- **False Positive Rate (FPR)**: ~21.7%  
-  → *Resource Consideration*: One in five non-diabetic patients may be flagged, potentially impacting workflow and resource allocation.
-
-- **Accuracy**: ~75.7%  
-  → *Overall Reliability*: The model performs well across the population, with three out of four predictions being correct.
-
-- **F1 Score**: ~0.471  
-  → *Balanced Effectiveness*: Reflects a moderate trade-off between precision and recall, useful for threshold tuning and model comparison.
-
-
----
-
-Model Performance Summary: Diabetes Risk Prediction
-<img width="605" height="437" alt="image" src="https://github.com/user-attachments/assets/ccfca38c-1560-4de3-9fe1-9a159d00694e" />
-
-#### 📊 Confusion Matrix Counts
-- **True Negatives (TN)**: ~30,000 — correctly identified non-diabetic patients
-- **False Positives (FP)**: 7,957 — patients incorrectly flagged as diabetic
-- **False Negatives (FN)**: 2,693 — missed diabetic cases
-- **True Positives (TP)**: 5,252 — correctly identified diabetic patients
-- **Total Samples**: 46,285
 
 #### 📈 Key Metrics (Approximate)
 - **Prevalence**: 7,945 / 46,285 ≈ **17.2%**  
@@ -737,6 +705,15 @@ Model Performance Summary: Diabetes Risk Prediction
 
 - **F1 Score**: ≈ **0.48**  
   Balances precision and recall. Indicates moderate overall effectiveness.
+
+<img width="605" height="437" alt="image" src="https://github.com/user-attachments/assets/ccfca38c-1560-4de3-9fe1-9a159d00694e" />
+
+#### 📊 Confusion Matrix Counts
+- **True Negatives (TN)**: ~30,000 — correctly identified non-diabetic patients
+- **False Positives (FP)**: 7,957 — patients incorrectly flagged as diabetic
+- **False Negatives (FN)**: 2,693 — missed diabetic cases
+- **True Positives (TP)**: 5,252 — correctly identified diabetic patients
+- **Total Samples**: 46,285
 
 #### 🧠 Strategic Takeaways
 - The model is **recall-oriented**, prioritizing detection of diabetic cases.
