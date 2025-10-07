@@ -99,7 +99,7 @@ Evaluation: Accuracy, Precision, Recall,F1-Score ,Log Loss, Confusion Matrix
   - Encoded Education as ordinal (Higer→ Basic).
   - Truncate noisy data on BMI as over 60 was not stable and were outliers
   - Built interaction features: HighBP×HighChol, BMI×PhysHlth, Education×Income visuals.
-  - In the dataset, individuals labeled as **2 (Prediabetic)** were reclassified as **1 (Diabetic)**.  
+  - Individuals labeled as **2 (Prediabetic)**  has been reclassified as **1 (Diabetic)**.  
       This transformation simplifies the target variable into a **binary classification problem**, distinguishing between:
       - **0 → Non-Diabetic**
       - **1 → Diabetic (including Prediabetic)**
