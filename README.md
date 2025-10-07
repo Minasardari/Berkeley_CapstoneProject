@@ -760,11 +760,11 @@ What suggestions do you have for next steps?
 
 | Focus Area | Description |
 |-------------|--------------|
-| **Model Refinement** | Explore **Ensemble Stacking (XGB + LR)** or **LightGBM/CatBoost** for improved precision and faster training. |
 | **Feature Engineering** | Incorporate new predictors such as dietary habits, physical activity frequency, sleep quality, or genetic predisposition. |
-| **Class Imbalance Handling** | Apply **SMOTE**, **ADASYN**, or cost-sensitive learning to improve recall for minority diabetic cases. |
+| **Deployment Pipeline** | Build a app or website for Predicting based on User provided survey values. |
+| **Model Refinement** | Explore **Ensemble Stacking (XGB + LR)** or **LightGBM/CatBoost** for improved precision and faster training. |
+| **Class Imbalance Handling** | Apply **SMOTE** to improve recall for minority diabetic cases. |
 | **Temporal Analysis** | Study longitudinal health data to identify early warning signals before diabetes onset. |
-| **Deployment Pipeline** | Containerize with **FastAPI / Streamlit** for interactive risk prediction dashboards in real time. |
 | **Fairness & Bias Testing** | Evaluate model performance across gender, age, and income groups to ensure equitable outcomes. |
 
 ---
