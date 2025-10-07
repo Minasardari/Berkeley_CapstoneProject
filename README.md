@@ -784,6 +784,7 @@ Follow-up steps:
 
 ### Leasson Learned:
 “My first SHAP run flagged a red flag—key signals like High Blood Pressure and High Cholesterol were ‘missing.’ Turns out I’d accidentally excluded the binary features from my preprocessing. After adding them back into the ColumnTransformer, the models slowed a bit but became reliable, and the feature attributions and outcomes finally made clinical sense.”
+
 “I also discovered that using Python’s gc.collect() (garbage collector) between GridSearchCV loops prevented the process from getting stuck indefinitely. This simple fix helped free up memory, allowing my hyperparameter tuning to run smoothly and complete successfully.”
 
 ##### Contact and Further Information
