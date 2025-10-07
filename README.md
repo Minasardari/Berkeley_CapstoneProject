@@ -772,7 +772,7 @@ By applying these findings, healthcare organizations can:
 ### 🩺Clinical takeaway:
 
 What this tool does :
-- Uses routine survey‐style information (age, BMI, blood pressure, cholesterol, activity level, general health, etc.) to estimate a patient’s risk of diabetes.
+- Uses routine survey‐style information (age, BMI, blood pressure, cholesterol, activity level, general health, etc.) to estimate a patient’s risk of diabetes( The model catches ~66% of actual diabetic cases)  .
 - Returns a risk score (0–1) and a flag (Diabetic vs Non-Diabetic) based on a tuned threshold chosen for screening.
 
 - The tool is tuned to miss fewer true diabetics (higher recall) even if that creates some false alarms. That’s appropriate for screening. It should augment, not replace, clinical judgment and confirmatory testing (A1C, FPG, OGTT).
